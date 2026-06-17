@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +24,9 @@ class Expense
     #[ORM\Column]
     private ?\DateTimeImmutable $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'expenses')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,7 +40,6 @@ class Expense
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -48,7 +51,6 @@ class Expense
     public function setAmount(float $amount): static
     {
         $this->amount = $amount;
-
         return $this;
     }
 
@@ -60,7 +62,17 @@ class Expense
     public function setDate(\DateTimeImmutable $date): static
     {
         $this->date = $date;
+        return $this;
+    }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
         return $this;
     }
 }
