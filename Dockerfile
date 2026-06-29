@@ -9,9 +9,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
+RUN APP_ENV=prod composer install --no-dev --optimize-autoloader --no-scripts
 
-RUN php bin/console doctrine:migrations:migrate --no-interaction || true
+RUN php bin/console cache:clear --env=prod --no-warmup || true
+RUN php bin/console cache:warmup --env=prod || true
+RUN php bin/console doctrine:migrations:migrate --no-interaction --env=prod || true
 
 EXPOSE 10000
 
