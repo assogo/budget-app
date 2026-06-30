@@ -11,6 +11,7 @@ use App\Repository\ExpenseRepository;
 use App\State\ExpenseProcessor;
 use App\State\ExpenseProvider;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: ExpenseRepository::class)]
 #[ApiResource(
@@ -39,6 +40,7 @@ class Expense
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'expenses')]
+    #[Ignore]
     private ?User $user = null;
 
     public function getId(): ?int { return $this->id; }
