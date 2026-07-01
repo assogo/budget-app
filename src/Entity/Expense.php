@@ -39,6 +39,12 @@ class Expense
     #[ORM\Column]
     private ?\DateTimeImmutable $date = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $category = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $type = null;
+
     #[ORM\ManyToOne(inversedBy: 'expenses')]
     #[Ignore]
     private ?User $user = null;
@@ -50,6 +56,10 @@ class Expense
     public function setAmount(float $amount): static { $this->amount = $amount; return $this; }
     public function getDate(): ?\DateTimeImmutable { return $this->date; }
     public function setDate(\DateTimeImmutable $date): static { $this->date = $date; return $this; }
+    public function getCategory(): ?string { return $this->category; }
+    public function setCategory(?string $category): static { $this->category = $category; return $this; }
+    public function getType(): ?string { return $this->type; }
+    public function setType(?string $type): static { $this->type = $type; return $this; }
     public function getUser(): ?User { return $this->user; }
     public function setUser(?User $user): static { $this->user = $user; return $this; }
 }
